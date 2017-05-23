@@ -1,0 +1,37 @@
+$padding: 15px 20px;
+
+.accordeon {
+
+}
+
+.accordeon__item {
+	margin-bottom: 5px;
+	background-color: #e7e7e7;
+	border-radius: 15px;
+}
+
+.accordeon__title {
+	border-radius: 15px;
+	padding: $padding;
+	font-weight: bold;
+
+	&:nth-child(odd) {
+		background-color: #696666;
+		color: #fff;
+	}
+
+	&:nth-child(even) {
+		background-color: #e7e7e7;
+	}
+
+	&:hover,
+	&.active {
+		background-color: #ff8663;
+		color: #fff;
+	}
+}
+
+.accordeon__body {
+	padding: $padding;
+	display: none;
+}
