@@ -29,6 +29,7 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "bluebird": "^3.5.0",
     "normalize.css": "^6.0.0"
   }
 }

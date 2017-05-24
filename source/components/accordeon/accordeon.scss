@@ -1,18 +1,36 @@
-$padding: 15px 20px;
+$padding-top: 15px;
+$padding-left: 20px;
 
 .accordeon {
-
+	position: relative;
 }
 
 .accordeon__item {
+	position: relative;
 	margin-bottom: 5px;
 	background-color: #e7e7e7;
 	border-radius: 15px;
+	overflow: hidden;
+
+	&.active {
+		.accordeon__title {
+			@extend .accordeon__title:hover;
+		}
+		.accordeon__body {
+			//height: auto;
+			padding-bottom: $padding-top;
+			padding-top: $padding-top;
+		}
+	}
 }
 
 .accordeon__title {
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
 	border-radius: 15px;
-	padding: $padding;
+	padding: $padding-top $padding-left;
 	font-weight: bold;
 
 	&:nth-child(odd) {
@@ -24,14 +42,17 @@ $padding: 15px 20px;
 		background-color: #e7e7e7;
 	}
 
-	&:hover,
-	&.active {
+	&:hover {
 		background-color: #ff8663;
 		color: #fff;
+		cursor: pointer;
 	}
 }
 
 .accordeon__body {
-	padding: $padding;
-	display: none;
+	height: 0;
+	padding-bottom: 0;
+	padding-top: 0;
+	padding-left: $padding-left;
+	padding-right: $padding-left;
 }
