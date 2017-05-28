@@ -1,7 +1,8 @@
 import "./accordeon.scss";
 
 //Elements
-const 	accordeons = document.querySelectorAll(".accordeon");
+const 	accordeons = document.getElementsByClassName("accordeon"),
+		accItems   = document.getElementsByClassName("accordeon__item");
 
 //Data for Accordeon
 const 	classActive = "active",
@@ -17,10 +18,11 @@ let Accordeon = {
 			event = event || event.window;
 
 			if(event.target.classList.contains("accordeon__title")) {
-				let activeItem = event.target.parentNode,
-					textItem = activeItem.nextElementSibling,
-					acc = activeItem.parentNode.parentNode;
+				let activeItem = event.target.parentNode;
+					//textItem = activeItem.nextElementSibling,
+					//acc = activeItem.parentNode.parentNode;
 
+				Accordeon.closeAll();
 				Accordeon.toggleClass(activeItem);
 			}
 		});
@@ -33,6 +35,15 @@ let Accordeon = {
 		} else {
 			this.height(el);
 			el.classList.add(classActive);
+		}
+	},
+
+	closeAll() {
+		for(let i = 0; i < accItems.length; i++) {
+			if(accItems[i].classList.contains(classActive)) {
+				accItems[i].classList.remove(classActive);
+				accItems[i].removeAttribute("style");
+			}
 		}
 	},
 
