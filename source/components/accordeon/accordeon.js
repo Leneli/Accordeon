@@ -1,4 +1,5 @@
 import "./accordeon.scss";
+import Animate from "./animate";
 
 //Elements
 const 	accordeons = document.getElementsByClassName("accordeon"),
@@ -8,7 +9,7 @@ const 	accordeons = document.getElementsByClassName("accordeon"),
 const 	classActive = "active",
 		padding = 20;
 
-
+//run script
 window.onload = function() { Accordeon.init(); };
 
 
@@ -19,8 +20,6 @@ let Accordeon = {
 
 			if(event.target.classList.contains("accordeon__title")) {
 				let activeItem = event.target.parentNode;
-					//textItem = activeItem.nextElementSibling,
-					//acc = activeItem.parentNode.parentNode;
 
 				Accordeon.closeAll();
 				Accordeon.toggleClass(activeItem);
@@ -30,27 +29,50 @@ let Accordeon = {
 
 	toggleClass(el) {
 		if(el.classList.contains(classActive)) {
-			el.classList.remove(classActive);
-			el.removeAttribute("style");
+			Accordeon.closeItem(el);
 		} else {
-			this.height(el);
 			el.classList.add(classActive);
+			Accordeon.animateOpen(el);
 		}
+	},
+
+	closeItem(el) {
+		Accordeon.animateCloce(el);
+		el.classList.remove(classActive);
+		el.removeAttribute("style");
 	},
 
 	closeAll() {
 		for(let i = 0; i < accItems.length; i++) {
 			if(accItems[i].classList.contains(classActive)) {
-				accItems[i].classList.remove(classActive);
-				accItems[i].removeAttribute("style");
+				Accordeon.closeItem(accItems[i]);
 			}
 		}
 	},
 
-	height(el) {
-		let maxHeight = el.scrollHeight + (padding * 2),
-			elHeight  = 0;
+	animateOpen(el) {
+		let titleHeight = el.getElementsByClassName("accordeon__title")[0].scrollHeight,
+			maxHeight = el.scrollHeight + padding - titleHeight;
 
-		el.style.height = maxHeight + "px";
+		Animate({
+			duration: 400,
+			timing: function (timeFraction) { return timeFraction; },
+			draw: function (progress) {
+				el.style.height = progress * maxHeight + titleHeight + 'px';
+			}
+		});
+	},
+
+	animateCloce(el) {
+		let accBody = el.getElementsByClassName("accordeon__body")[0],
+			height = accBody.scrollHeight + padding;
+
+		Animate({
+			duration: 400,
+			timing: function (timeFraction) { return timeFraction; },
+			draw: function (progress) {
+				accBody.style.height = height - (progress * height) + 'px';
+			}
+		});
 	}
 };
